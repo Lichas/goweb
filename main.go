@@ -48,7 +48,6 @@ func initData(db *gorm.DB) {
 	var t1 BlogTag
 	db.First(&t1, 1)
 	fmt.Println(t1.Name)
-
 	var b1 Blog
 	db.First(&b1)
 	fmt.Println(b1.Content)
@@ -62,8 +61,9 @@ func main() {
 	initData(db)
 
 	r := gin.Default()
-	r.GET("/ping", Ping) //when c *gin.Context pass in
-	r.GET("/blog", GetBlogs)
+	r.GET("/ping", Ping)     //when c *gin.Context pass in
+	r.GET("/blog", GetBlogs) // curl -i -X POST 0.0.0.0:8080 -d '{"title":"testTitle","content":"good txt."}'
+	r.POST("/addblog", AddBlog)
 	r.Run()
 }
 
@@ -83,4 +83,11 @@ func GetBlogs(c *gin.Context) {
 	} else {
 		c.JSON(200, blogs)
 	}
+}
+
+func AddBlog(c *gin.Context) {
+	var blog Blog
+	c.BindJSON(&blog)
+	db.Create(&blog)
+	c.JSON(200, blog)
 }
