@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+  <div id="app">
+    <el-button @click="visible = true">Button</el-button>
+    <el-dialog :visible.sync="visible" title="Hello world">
+      <p>Try Element</p>
+    </el-dialog>
+  </div>
+  <template>
+    <div>
+      <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
+        <el-form-item label="博客标题" prop="field101">
+          <el-input v-model="formData.field101" placeholder="请输入单行文本博客标题" clearable :style="{width: '100%'}">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="博客内容" prop="field102">
+          <el-input v-model="formData.field102" type="textarea" placeholder="请输入博客内容"
+            :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
+        </el-form-item>
+        <el-form-item label="" prop="field110">
+          <el-button type="primary" icon="el-icon-circle-check" size="medium"> 提交 </el-button>
+        </el-form-item>
+        <el-form-item size="large">
+          <el-button type="primary" @click="submitForm">提交</el-button>
+          <el-button @click="resetForm">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </template>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    export default {
+      components: {},
+      props: [],
+      data() {
+        return {
+          formData: {
+            field101: undefined,
+            field102: undefined,
+            field110: undefined,
+          },
+          rules: {
+            field101: [{
+              required: true,
+              message: '请输入单行文本博客标题',
+              trigger: 'blur'
+            }],
+            field102: [{
+              required: true,
+              message: '请输入博客内容',
+              trigger: 'blur'
+            }],
+          },
+        }
+      },
+      computed: {},
+      watch: {},
+      created() {},
+      mounted() {},
+      methods: {
+        submitForm() {
+          this.$refs['elForm'].validate(valid => {
+            if (!valid) return
+            // TODO 提交表单
+          })
+        },
+        resetForm() {
+          this.$refs['elForm'].resetFields()
+        },
+      }
+    }
+    
+    </script>
+</html>
